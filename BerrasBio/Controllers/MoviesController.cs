@@ -2,6 +2,7 @@
 using BerrasBio.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Linq;
 
 namespace BerrasBio.Controllers
 {
@@ -16,7 +17,7 @@ namespace BerrasBio.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(await _service.GetAllMoviesAsync());
+            return View(await _service.GetAllAsync());
         }
         public IActionResult Create()
         {
@@ -30,7 +31,7 @@ namespace BerrasBio.Controllers
                 return View(movie);
             }
             
-            await _service.AddMovieAsync(movie);
+            await _service.AddAsync(movie);
             return RedirectToAction("Index");
         }
     }

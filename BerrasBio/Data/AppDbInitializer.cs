@@ -45,34 +45,34 @@ namespace BerrasBio.Data
                     {
                         new Actor()
                         {
-                            Name = "Actor 1",
-                            Bio = "This is the Bio of the first actor"
-                            //ProfilePictureURL = "http://dotnethow.net/images/actors/actor-1.jpeg"
+                            Name = "Lin Shaye",
+                            Bio = "This is the Bio of Lin Shaye"
 
                         },
                         new Actor()
                         {
-                            Name = "Actor 2",
-                            Bio = "This is the Bio of the second actor"
-                            //ProfilePictureURL = "http://dotnethow.net/images/actors/actor-2.jpeg"
+                            Name = "Daniel Craig",
+                            Bio = "This is the Bio of Daniel Craig"
                         },
                         new Actor()
                         {
-                            Name = "Actor 3",
-                            Bio = "This is the Bio of the third actor"
-                            //ProfilePictureURL = "http://dotnethow.net/images/actors/actor-3.jpeg"
+                            Name = "Tom Hardy",
+                            Bio = "This is the Bio of Tom Hardy"
                         },
                         new Actor()
                         {
-                            Name = "Actor 4",
-                            Bio = "This is the Bio of the fourth actor"
-                            //ProfilePictureURL = "http://dotnethow.net/images/actors/actor-4.jpeg"
+                            Name = "Dwayne Johnson",
+                            Bio = "This is the Bio of Dwayne Johnson"
                         },
                         new Actor()
                         {
-                            Name = "Actor 5",
-                            Bio = "This is the Bio of the fifth actor",
-                            //ProfilePictureURL = "http://dotnethow.net/images/actors/actor-5.jpeg"
+                            Name = "Chris Pratt",
+                            Bio = "This is the Bio of Chris Pratt",
+                        },
+                        new Actor()
+                        {
+                            Name = "Timothée Chalamet",
+                            Bio = "This is the Bio of Timothée Chalamet",
                         }
                     });
                     context.SaveChanges();
@@ -87,11 +87,8 @@ namespace BerrasBio.Data
                             Name = "Insidious",
                             Description = "This is the Insidious movie description",
                             Price = 150,
-                            //ImageURL = "http://dotnethow.net/images/movies/movie-3.jpeg",
-                            //StartDate = DateTime.Now.AddDays(-10),
-                            //EndDate = DateTime.Now.AddDays(10),
+                            ImageURL = "../Content/Images/p-1.jpg",
                             CinemaId = 1,
-                            //ProducerId = 3,
                             Genre = MovieCategory.Horror
                         },
                         new Movie()
@@ -99,11 +96,8 @@ namespace BerrasBio.Data
                             Name = "James Bond",
                             Description = "This is the James Bond description",
                             Price = 150,
-                            //ImageURL = "http://dotnethow.net/images/movies/movie-1.jpeg",
-                            //StartDate = DateTime.Now,
-                            //EndDate = DateTime.Now.AddDays(3),
+                            ImageURL = "../Content/Images/Post-6.jpg",
                             CinemaId = 1,
-                            //ProducerId = 1,
                             Genre = MovieCategory.Action
                         },
                         new Movie()
@@ -111,11 +105,8 @@ namespace BerrasBio.Data
                             Name = "Venom",
                             Description = "This is the Venom movie description",
                             Price = 150,
-                            //ImageURL = "http://dotnethow.net/images/movies/movie-4.jpeg",
-                            //StartDate = DateTime.Now,
-                            //EndDate = DateTime.Now.AddDays(7),
+                            ImageURL = "../Content/Images/Post-1.jpg",
                             CinemaId = 1,
-                            //ProducerId = 4,
                             Genre = MovieCategory.Action
                         },
                         new Movie()
@@ -123,11 +114,8 @@ namespace BerrasBio.Data
                             Name = "Jungle Cruise",
                             Description = "This is the Jungle Cruise movie description",
                             Price = 150,
-                            //ImageURL = "http://dotnethow.net/images/movies/movie-6.jpeg",
-                            //StartDate = DateTime.Now.AddDays(-10),
-                            //EndDate = DateTime.Now.AddDays(-5),
+                            ImageURL = "../Content/Images/Post-3.jpg",
                             CinemaId = 1,
-                            //ProducerId = 2,
                             Genre = MovieCategory.Comedy
                         },
                         new Movie()
@@ -135,11 +123,8 @@ namespace BerrasBio.Data
                             Name = "The Tomorrow War",
                             Description = "This is the The Tomorrow War movie description",
                             Price = 150,
-                            //ImageURL = "http://dotnethow.net/images/movies/movie-8.jpeg",
-                            //StartDate = DateTime.Now.AddDays(3),
-                            //EndDate = DateTime.Now.AddDays(20),
+                            ImageURL = "../Content/Images/Post-2.jpg",
                             CinemaId = 1,
-                            //ProducerId = 5,
                             Genre = MovieCategory.Action
                         },
                         new Movie()
@@ -147,11 +132,8 @@ namespace BerrasBio.Data
                             Name = "Dune",
                             Description = "This is the Dune movie description",
                             Price = 165,
-                            ///*ImageURL*/ = "http://dotnethow.net/images/movies/movie-7.jpeg",
-                            //StartDate = DateTime.Now.AddDays(-10),
-                            //EndDate = DateTime.Now.AddDays(-2),
+                            ImageURL = "../Content/Images/post-4.jpg",
                             CinemaId = 1,
-                            //ProducerId = 3,
                             Genre = MovieCategory.Fantasy
                         }
                     });

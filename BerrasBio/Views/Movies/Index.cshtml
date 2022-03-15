@@ -1,26 +1,20 @@
-﻿@model IEnumerable<Movie>
+﻿@model IEnumerable<BerrasBio.Models.Movie>
 
 @{
-    ViewData["Title"] = "All Movies";
+    ViewData["Title"] = "Movies";
 }
+<link rel="stylesheet" href="~/BerrasBio.styles.css" asp-append-version="true" />
 
-<h1>Indexview MoviesController</h1>
+<h1>All Movies</h1>
 
 <p>
     <a class="btn btn-outline-success" asp-action="Create">Create New</a>
     <br />
 </p>
+@foreach (var item in Model)
+{
+    <a asp-action="Details" asp-route-id="@item.Id">
+        <img class="moviepic" src="@item.ImageURL" alt="@item.Name">
+    </a>
+}
 
-<div class="row">
-    <h1>All Movies</h1>
-    <div class="column">
-        <a asp-controller="Movies" asp-action="Details"><img class="moviepic" src="../Content/Images/p-1.jpg" /></a>
-        <a asp-controller="Movies" asp-action="Details"><img class="moviepic" src="../Content/Images/Post-6.jpg" /></a>
-        <a asp-controller="Movies" asp-action="Details"><img class="moviepic" src="../Content/Images/Post-1.jpg" /></a>
-        <a asp-controller="Movies" asp-action="Details"><img class="moviepic" src="../Content/Images/Post-3.jpg" /></a>
-        <a asp-controller="Movies" asp-action="Details"><img class="moviepic" src="../Content/Images/Post-2.jpg" /></a>
-        <a asp-controller="Movies" asp-action="Details"><img class="moviepic" src="../Content/Images/post-4.jpg" /></a>
-    </div>
-</div>
-
-@*Lägg till en foreach som skriver ut IMG-Attribut istället*@

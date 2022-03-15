@@ -1,13 +1,10 @@
-﻿using BerrasBio.Models;
+﻿using BerrasBio.Data.Base;
+using BerrasBio.Models;
 
 namespace BerrasBio.Data.Services
 {
-    public interface IMovieService
+    public interface IMovieService : IGenericRepository<Movie>
     {
-        Task<IEnumerable<Movie>> GetAllMoviesAsync();
-        Task<Movie> GetMovieById(int id);
-        Task AddMovieAsync(Movie movie);
-        Task<Movie> UpdateMovieAsync(int id, Movie newMovie);
-        void DeleteMovie(int id);
+
     }
 }

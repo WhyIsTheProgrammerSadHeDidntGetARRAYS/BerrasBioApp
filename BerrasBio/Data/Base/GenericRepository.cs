@@ -20,13 +20,13 @@ namespace BerrasBio.Data.Base
         {
             //set is a dbset, and we use 'T' since we dont know what entity we will be adding to
             await _context.Set<T>().AddAsync(entity);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
         public async Task Delete(int id)
         {
             var entityToDelete = await _context.Set<T>().FirstOrDefaultAsync(x => x.Id == id);
-            if (entityToDelete != null)
+            if (entityToDelete != null) //maybe delete this if-statement, and check for null in controller
             {
                 _context.Set<T>().Remove(entityToDelete);
             }
@@ -42,7 +42,7 @@ namespace BerrasBio.Data.Base
         public async Task<T> GetByIdAsync(int id)
         {
             var actor = await _context.Set<T>().FirstOrDefaultAsync(x => x.Id == id);
-            return actor;
+            return actor!;
         }
 
         public async Task<T> UpdateAsync(int id, T entity)
