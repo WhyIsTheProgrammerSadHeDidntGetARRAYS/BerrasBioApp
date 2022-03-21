@@ -1,7 +1,7 @@
-﻿using BerrasBio.Data.Base; //delete
-using BerrasBio.Data.Services;
+﻿using BerrasBio.Data.Services;
 using BerrasBio.Models;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace BerrasBio.Controllers
 {

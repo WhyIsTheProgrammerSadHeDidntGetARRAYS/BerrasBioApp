@@ -1,0 +1,54 @@
+﻿@model BerrasBio.Models.Movie
+
+@{
+    ViewData["Title"] = "Details";
+}
+<link rel="stylesheet" href="~/BerrasBio.styles.css" asp-append-version="true" />
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <h4>Movie Details</h4>
+        <div class="card mb-12">
+            <div class="row g-0">
+                <div class="col-md-12">
+                    <div class="card-header text-white bg-info">
+                        <p class="card-text">
+                            <h5 class="card-title">
+                                @Model.Name
+                            </h5>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <a asp-action="Details" asp-route-id="@Model.Id">
+                        <img src='/@Url.Content(@Model.ImageLink)' width="100%">
+                    </a>
+                    @*<img src="@Model.ImageURL" alt="@Model.Name">*@
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <p class="card-text"><b>Description: </b>@Model.Description</p>
+                        @*<p class="card-text">
+                            <b>Cinema: </b>
+                            <a asp-controller="Cinemas" asp-action="Details" asp-route-id="@Model.CinemaId">
+                                @Model.Cinema.Name
+                            </a>
+                        </p>*@
+                        <p class="card-text"><b>Cinema: </b>@Model.Cinema.Name</p>
+                        <p class="card-text"><b>Genre: </b>@Model.Genre</p>
+                        <p class="card-text"><b>Price: </b>@Model.Price</p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div>
+            <a class="btn btn-success" asp-controller="Sessions" asp-action="Index" asp-route-id="@Model.Id">
+                Buy Ticket
+            </a> |
+            <a class="btn btn-secondary" asp-action="Index">Back to List</a> |
+            <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
+        </div>
+    </div>
+</div>

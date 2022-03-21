@@ -14,14 +14,16 @@ namespace BerrasBio.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public double Price { get; set; }
-        public string ImageURL { get; set; } // ska ha senare
-        public MovieCategory Genre { get; set; } 
+        public string ImageLink { get; set; } 
+        public MovieCategory Genre { get; set; }
 
         //Relationships
-        public List<Movie_Actor>? MoviesActors { get; set; }
+        public List<Movie_Actor>? MoviesActors { get; set; } 
 
         public int CinemaId { get; set; }
         [ForeignKey("CinemaId")]
         public Cinema? Cinema { get; set; }
+
+        public Session Session { get; set; }
     }
 }

@@ -1,5 +1,7 @@
 using BerrasBio.Data;
+using BerrasBio.Data.Base;
 using BerrasBio.Data.Services;
+using BerrasBio.Models;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +19,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<IMovieService, MovieService>();
 builder.Services.AddScoped<ICinemaService, CinemaService>();
 builder.Services.AddScoped<IActorService, ActorService>();
+builder.Services.AddScoped<IBookingService, BookingService>();
+builder.Services.AddScoped<ISessionService, SessionService>();
+//builder.Services.AddScoped(typeof(IGenericRepository<Movie>), typeof(GenericRepository<Movie>));
 
 var app = builder.Build();
 

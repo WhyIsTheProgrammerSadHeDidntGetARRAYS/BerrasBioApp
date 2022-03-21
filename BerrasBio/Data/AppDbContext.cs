@@ -15,6 +15,11 @@ namespace BerrasBio.Data
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Actor> Actors { get; set; }
         public DbSet<Cinema> Cinemas { get; set; }
+        public DbSet<Salon> Salons { get; set; }
+        public DbSet<Session> Sessions { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
+
+        // Junction-table in SQL
         public DbSet<Movie_Actor> Movies_Actors { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -33,8 +38,14 @@ namespace BerrasBio.Data
                 .HasOne(am => am.Actor)
                 .WithMany(am => am.MoviesActors)
                 .HasForeignKey(am => am.ActorId);
+            
+            //kika på denna
+            //modelBuilder.Entity<Salon>()
+            //    .HasOne(c => c.Cinema)
+            //    .WithOne(c => c.Salon);
 
             base.OnModelCreating(modelBuilder);
         }
+
     }
 }

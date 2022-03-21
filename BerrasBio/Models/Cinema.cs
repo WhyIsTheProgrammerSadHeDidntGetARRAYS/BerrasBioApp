@@ -10,14 +10,15 @@ namespace BerrasBio.Models
 {
     public class Cinema : IEntityBase
     {
-        [Key]
+        [Key] //I think this key annotation overrides the Id property from IEntitybase? Also its not needed either way
         public int Id { get; set; }
 
         [Display(Name = "Full Name")]
         public string Name { get; set; }
         public string Description { get; set; }
 
-        //Relationship
+        //Relationships
         public List<Movie>? Movies { get; set; }
+        public Salon Salon { get; set; }
     }
 }

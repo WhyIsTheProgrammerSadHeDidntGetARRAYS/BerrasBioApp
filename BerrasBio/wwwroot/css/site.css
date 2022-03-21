@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+
 html {
     font-size: 14px;
 }
@@ -14,32 +16,37 @@ html {
 }
 
 body {
-    background-color: black;
+   /* background-color: white;*/
     font-size: .75em;
     font-family: Verdana, Helvetica, Sans-Serif;
     margin: 0;
     padding: 0;
-    color: White;
+    color: black;
 }
 
 .moviepic {
     width: 200px; /* You can set the dimensions to whatever you want */
-    height: 270px;
+    height: 280px;
     object-fit: cover;
     padding: inherit;
     margin-top: 20px;
     margin-bottom: 20px;
     margin-right: 30px;
     transition: .2s;
+    box-shadow: 5px 5px 5px #c1bebe;
 }
 
 .moviepic:hover {
     transform: scale(1.2);
 }
 
-th {
+/*th {
     color:white;
 }
 td {
     color:white;
+}*/
+a, a:hover, a:focus, a:active {
+    text-decoration: none;
+    color: inherit;
 }

@@ -5,7 +5,8 @@
 }
 <link rel="stylesheet" href="~/BerrasBio.styles.css" asp-append-version="true" />
 
-<h1>All Movies</h1>
+<h1>Currently Showing</h1>
+<h3>Book a ticket now!</h3>
 
 <p>
     <a class="btn btn-outline-success" asp-action="Create">Create New</a>
@@ -14,7 +15,7 @@
 @foreach (var item in Model)
 {
     <a asp-action="Details" asp-route-id="@item.Id">
-        <img class="moviepic" src="@item.ImageURL" alt="@item.Name">
+        <img class="moviepic" src="@item.ImageLink" alt="@item.Name">
     </a>
 }
 

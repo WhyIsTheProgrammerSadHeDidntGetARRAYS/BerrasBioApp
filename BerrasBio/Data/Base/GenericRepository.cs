@@ -2,12 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace BerrasBio.Data.Base
 {
-    //implementation of generictype CRUD operations
+    //implementation of repository interface
     public class GenericRepository<T> : IGenericRepository<T> where T : class, IEntityBase
     {
         private readonly AppDbContext _context;
@@ -15,6 +16,18 @@ namespace BerrasBio.Data.Base
         public GenericRepository(AppDbContext context)
         {
             _context = context;
+        }
+        public async Task<IEnumerable<T>> GetAllAsync() //behöver en till GetAllAsync
+        {
+            //här hade jag velat ha möjlighet att inkludera properties
+            var entity = await _context.Set<T>().ToListAsync();
+            return entity;
+        } 
+        public async Task<IEnumerable<T>> GetAllAsync(params Expression<Func<T, object>>[] include)
+        {
+            IQueryable<T> query = _context.Set<T>();
+            query = include.Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
+            return await query.ToListAsync();
         }
         public async Task AddAsync(T entity)
         {
@@ -33,12 +46,6 @@ namespace BerrasBio.Data.Base
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync()
-        {
-            var actors = await _context.Set<T>().ToListAsync();
-            return actors;
-        }
-
         public async Task<T> GetByIdAsync(int id)
         {
             var actor = await _context.Set<T>().FirstOrDefaultAsync(x => x.Id == id);
@@ -47,9 +54,13 @@ namespace BerrasBio.Data.Base
 
         public async Task<T> UpdateAsync(int id, T entity)
         {
-            _context.Set<T>().Update(entity);
+            var entry = _context.Entry<T>(entity);
+            entry.State = EntityState.Modified;
+            //_context.Set<T>().Update(entity);
             await _context.SaveChangesAsync();
             return entity;
         }
+
+       
     }
 }
