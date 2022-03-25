@@ -1,4 +1,6 @@
-﻿@model BerrasBio.Models.Booking
+﻿@using BerrasBio.Data
+@using BerrasBio.Data.ViewModels
+@model NewBookingViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -19,19 +21,26 @@
             </div>
             <div class="form-group">
                 <label asp-for="SessionId" class="control-label"></label>
-                <select asp-for="SessionId" class ="form-control" asp-items="ViewBag.SessionId"></select>
+                <select asp-for="SessionId" class="form-control" asp-items="ViewBag.Sessions"></select>
+                <span asp-validation-for="SessionId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MovieId" class="control-label"></label>
+                <select asp-for="MovieId" class="form-control" asp-items="ViewBag.Movies"></select>
+                <span asp-validation-for="MovieId" class="text-danger"></span>
+                <br />
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
+                <a class="btn btn-outline-secondary" asp-controller="Movies" asp-action="Index">Back to Movie list</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
 }

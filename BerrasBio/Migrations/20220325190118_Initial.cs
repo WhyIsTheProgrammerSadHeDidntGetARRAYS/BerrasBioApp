@@ -114,9 +114,9 @@ namespace BerrasBio.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     AvailableSeats = table.Column<int>(type: "int", nullable: false),
-                    MovieId = table.Column<int>(type: "int", nullable: false),
-                    CinemaId = table.Column<int>(type: "int", nullable: false),
-                    SalonId = table.Column<int>(type: "int", nullable: false)
+                    MovieId = table.Column<int>(type: "int", nullable: true),
+                    CinemaId = table.Column<int>(type: "int", nullable: true),
+                    SalonId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -125,20 +125,17 @@ namespace BerrasBio.Migrations
                         name: "FK_Sessions_Cinemas_CinemaId",
                         column: x => x.CinemaId,
                         principalTable: "Cinemas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Sessions_Movies_MovieId",
                         column: x => x.MovieId,
                         principalTable: "Movies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Sessions_Salons_SalonId",
                         column: x => x.SalonId,
                         principalTable: "Salons",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -149,7 +146,7 @@ namespace BerrasBio.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AmountOfTickets = table.Column<int>(type: "int", nullable: false),
                     SessionId = table.Column<int>(type: "int", nullable: false),
-                    MovieId = table.Column<int>(type: "int", nullable: false)
+                    MovieId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -158,14 +155,13 @@ namespace BerrasBio.Migrations
                         name: "FK_Bookings_Movies_MovieId",
                         column: x => x.MovieId,
                         principalTable: "Movies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Bookings_Sessions_SessionId",
                         column: x => x.SessionId,
                         principalTable: "Sessions",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -191,8 +187,7 @@ namespace BerrasBio.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Salons_CinemaId",
                 table: "Salons",
-                column: "CinemaId",
-                unique: true);
+                column: "CinemaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Sessions_CinemaId",
@@ -202,8 +197,7 @@ namespace BerrasBio.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Sessions_MovieId",
                 table: "Sessions",
-                column: "MovieId",
-                unique: true);
+                column: "MovieId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Sessions_SalonId",

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BerrasBio.Models
 {
-    public class Cinema : IEntityBase
+    public class Cinema 
     {
         [Key] //I think this key annotation overrides the Id property from IEntitybase? Also its not needed either way
         public int Id { get; set; }
@@ -19,6 +19,6 @@ namespace BerrasBio.Models
 
         //Relationships
         public List<Movie>? Movies { get; set; }
-        public Salon Salon { get; set; }
+        public List<Salon>? Salon { get; set; }
     }
 }

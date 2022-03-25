@@ -21,33 +21,31 @@
                 </div>
                 <div class="col-md-4">
                     <a asp-action="Details" asp-route-id="@Model.Id">
-                        <img src='/@Url.Content(@Model.ImageLink)' width="100%">
+                        <img src='@Url.Content(@Model.ImageLink)' width="100%">
                     </a>
-                    @*<img src="@Model.ImageURL" alt="@Model.Name">*@
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
                         <p class="card-text"><b>Description: </b>@Model.Description</p>
-                        @*<p class="card-text">
-                            <b>Cinema: </b>
-                            <a asp-controller="Cinemas" asp-action="Details" asp-route-id="@Model.CinemaId">
-                                @Model.Cinema.Name
-                            </a>
-                        </p>*@
-                        <p class="card-text"><b>Cinema: </b>@Model.Cinema.Name</p>
+                        <p class="card-text"><b>Cinema: </b>@Model.Cinema!.Name</p>
                         <p class="card-text"><b>Genre: </b>@Model.Genre</p>
                         <p class="card-text"><b>Price: </b>@Model.Price</p>
-
+                        @foreach (var actor in Model.MoviesActors)
+                        {
+                            <p class="card-text"><b>Actor(s):</b>
+                                <a asp-controller="Actors" asp-action="Details" asp-route-id="@actor.ActorId">@actor.Actor.Name</a>    
+                            </p>
+                        }
                     </div>
                 </div>
             </div>
         </div>
         <br />
         <div>
-            <a class="btn btn-success" asp-controller="Sessions" asp-action="Index" asp-route-id="@Model.Id">
-                Buy Ticket
+            <a class="btn btn-success" asp-controller="Bookings" asp-action="Create" asp-route-id="@Model.Id">
+                Book Your Ticket
             </a> |
-            <a class="btn btn-secondary" asp-action="Index">Back to List</a> |
+            <a class="btn btn-secondary" asp-controller="Movies" asp-action="Index">Back to Movie list</a> |
             <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
         </div>
     </div>

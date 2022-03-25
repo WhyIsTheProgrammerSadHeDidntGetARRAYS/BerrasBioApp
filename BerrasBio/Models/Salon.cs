@@ -23,5 +23,6 @@ namespace BerrasBio.Models
         //Relationships
         public int CinemaId { get; set; }
         public Cinema? Cinema { get; set; }
+        public List<Session>? Sessions { get; set; }
     }
 }

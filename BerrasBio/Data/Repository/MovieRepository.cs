@@ -1,5 +1,4 @@
-﻿using BerrasBio.Data.Base;
-using BerrasBio.Data.ViewModels;
+﻿using BerrasBio.Data.ViewModels;
 using BerrasBio.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -8,18 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BerrasBio.Data.Services
+namespace BerrasBio.Data.Repository
 {
-    public class MovieService : GenericRepository<Movie>, IMovieService
+    public class MovieRepository : IMovieRepository
     {
         private readonly AppDbContext _context;
 
-        public MovieService(AppDbContext context) : base(context)
+        public MovieRepository(AppDbContext context) 
         {
             _context = context;
         }
 
-        public async Task AddNewMovie(MovieViewModel movieVM)
+        public async Task AddNewMovie(NewMovieViewModel movieVM)
         {
             var movie = new Movie()
             {
@@ -32,15 +31,6 @@ namespace BerrasBio.Data.Services
             };
             await _context.AddAsync(movie);
             await _context.SaveChangesAsync();
-
-            var movieActors = new Movie_Actor()
-            {
-                ActorId = movieVM.ActorId,
-                MovieId = movie.Id
-            };
-            await _context.Movies_Actors.AddAsync(movieActors);
-            await _context.SaveChangesAsync();
-
 
         }
         public async Task<IEnumerable<Movie>> GetAllMovies()

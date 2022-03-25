@@ -54,7 +54,7 @@ namespace BerrasBio.Migrations
                     b.Property<int>("AmountOfTickets")
                         .HasColumnType("int");
 
-                    b.Property<int>("MovieId")
+                    b.Property<int?>("MovieId")
                         .HasColumnType("int");
 
                     b.Property<int>("SessionId")
@@ -160,8 +160,7 @@ namespace BerrasBio.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CinemaId")
-                        .IsUnique();
+                    b.HasIndex("CinemaId");
 
                     b.ToTable("Salons");
                 });
@@ -177,13 +176,13 @@ namespace BerrasBio.Migrations
                     b.Property<int>("AvailableSeats")
                         .HasColumnType("int");
 
-                    b.Property<int>("CinemaId")
+                    b.Property<int?>("CinemaId")
                         .HasColumnType("int");
 
-                    b.Property<int>("MovieId")
+                    b.Property<int?>("MovieId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SalonId")
+                    b.Property<int?>("SalonId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("StartDate")
@@ -193,8 +192,7 @@ namespace BerrasBio.Migrations
 
                     b.HasIndex("CinemaId");
 
-                    b.HasIndex("MovieId")
-                        .IsUnique();
+                    b.HasIndex("MovieId");
 
                     b.HasIndex("SalonId");
 
@@ -205,9 +203,7 @@ namespace BerrasBio.Migrations
                 {
                     b.HasOne("BerrasBio.Models.Movie", "Movie")
                         .WithMany()
-                        .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MovieId");
 
                     b.HasOne("BerrasBio.Models.Session", "Session")
                         .WithMany()
@@ -253,8 +249,8 @@ namespace BerrasBio.Migrations
             modelBuilder.Entity("BerrasBio.Models.Salon", b =>
                 {
                     b.HasOne("BerrasBio.Models.Cinema", "Cinema")
-                        .WithOne("Salon")
-                        .HasForeignKey("BerrasBio.Models.Salon", "CinemaId")
+                        .WithMany("Salon")
+                        .HasForeignKey("CinemaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -265,21 +261,15 @@ namespace BerrasBio.Migrations
                 {
                     b.HasOne("BerrasBio.Models.Cinema", "Cinema")
                         .WithMany()
-                        .HasForeignKey("CinemaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CinemaId");
 
                     b.HasOne("BerrasBio.Models.Movie", "Movie")
-                        .WithOne("Session")
-                        .HasForeignKey("BerrasBio.Models.Session", "MovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Session")
+                        .HasForeignKey("MovieId");
 
                     b.HasOne("BerrasBio.Models.Salon", "Salon")
-                        .WithMany()
-                        .HasForeignKey("SalonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Sessions")
+                        .HasForeignKey("SalonId");
 
                     b.Navigation("Cinema");
 
@@ -297,16 +287,19 @@ namespace BerrasBio.Migrations
                 {
                     b.Navigation("Movies");
 
-                    b.Navigation("Salon")
-                        .IsRequired();
+                    b.Navigation("Salon");
                 });
 
             modelBuilder.Entity("BerrasBio.Models.Movie", b =>
                 {
                     b.Navigation("MoviesActors");
 
-                    b.Navigation("Session")
-                        .IsRequired();
+                    b.Navigation("Session");
+                });
+
+            modelBuilder.Entity("BerrasBio.Models.Salon", b =>
+                {
+                    b.Navigation("Sessions");
                 });
 #pragma warning restore 612, 618
         }

@@ -21,9 +21,8 @@ namespace BerrasBio.Models
         public List<Movie_Actor>? MoviesActors { get; set; } 
 
         public int CinemaId { get; set; }
-        [ForeignKey("CinemaId")]
         public Cinema? Cinema { get; set; }
 
-        public Session Session { get; set; }
+        public List<Session> Session { get; set; }
     }
 }

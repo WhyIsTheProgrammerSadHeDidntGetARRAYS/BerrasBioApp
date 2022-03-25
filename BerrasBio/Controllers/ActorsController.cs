@@ -25,13 +25,13 @@ namespace BerrasBio.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([Bind("Name,Bio")] Actor actor)
+        public async Task<IActionResult> Create([Bind("Name,Bio")] Actor actor)
         {
             if (!ModelState.IsValid)
             {
                 return View(actor);
             }
-            _service.AddAsync(actor);
+            await _service.AddAsync(actor);
             return RedirectToAction(nameof(Index));
         }
 

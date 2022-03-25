@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BerrasBio.Data.ViewModels
 {
-    public class MovieViewModel
+    public class NewMovieViewModel
     {
         public int Id { get; set; }
         

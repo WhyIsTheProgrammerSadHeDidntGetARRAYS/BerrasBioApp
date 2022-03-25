@@ -1,4 +1,4 @@
-﻿using BerrasBio.Data.Services;
+﻿using BerrasBio.Data.Interfaces;
 using BerrasBio.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -7,15 +7,16 @@ namespace BerrasBio.Controllers
 {
     public class CinemasController : Controller
     {
-        // GET: CinemasController
-        private readonly ICinemaService _service;
-        public CinemasController(ICinemaService service)
+
+        private readonly ICinemaRepository _repository;
+        
+        public CinemasController(ICinemaRepository repository)
         {
-            _service = service;
+            _repository = repository;
         }
         public async Task<ActionResult> Index()
         {
-            return View(await _service.GetAllAsync());
+            return View(await _repository.GetAllCinemas());
         }
         public IActionResult Create()
         {
@@ -29,14 +30,14 @@ namespace BerrasBio.Controllers
             {
                 return View(cinema);
             }
-            _service.AddAsync(cinema);
+            _repository.AddAsync(cinema);
             return RedirectToAction(nameof(Index));
         }
 
         // GET: Actors/details/1
         public async Task<IActionResult> Details(int id)
         {
-            var cinemaDetails = await _service.GetByIdAsync(id);
+            var cinemaDetails = await _repository.GetByIdAsync(id);
 
             if (cinemaDetails == null)
             {
@@ -46,7 +47,7 @@ namespace BerrasBio.Controllers
         }
         public async Task<IActionResult> Edit(int id)
         {
-            var details = await _service.GetByIdAsync(id);
+            var details = await _repository.GetByIdAsync(id);
             if (details == null)
             {
                 return View("NotFound");
@@ -60,7 +61,7 @@ namespace BerrasBio.Controllers
             {
                 return View(cinema);
             }
-            await _service.UpdateAsync(id, cinema);
+            await _repository.UpdateAsync(id, cinema);
             return RedirectToAction(nameof(Index));
         }
     }

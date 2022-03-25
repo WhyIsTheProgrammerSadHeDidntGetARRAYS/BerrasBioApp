@@ -9,31 +9,32 @@ using Microsoft.EntityFrameworkCore;
 using BerrasBio.Data;
 using BerrasBio.Models;
 using BerrasBio.Data.Services;
+using BerrasBio.Data.Interfaces;
 
 namespace BerrasBio.Controllers
 {
     public class SessionsController : Controller
     {
         private readonly AppDbContext _context;
-        private readonly ISessionService _service;
+        private readonly ISessionRepository _repository;
 
-        public SessionsController(AppDbContext context, ISessionService service)
+        public SessionsController(AppDbContext context, ISessionRepository service)
         {
             _context = context;
-            _service = service;
+            _repository = service;
         }
 
         // GET: Sessions
         public async Task<IActionResult> Index()
         {
-            var sessions = await _service.GetAllSessionsAsync();
+            var sessions = await _repository.GetBookableSessionsToday();
             return View(sessions);
         }
 
-        public async Task<IActionResult> GetMovieSession(int id)
-        {
+        //public async Task<IActionResult> GetMovieSession(int id)
+        //{
 
-        }
+        //}
 
         // GET: Sessions/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -42,12 +43,7 @@ namespace BerrasBio.Controllers
             {
                 return NotFound();
             }
-
-            var session = await _context.Sessions
-                .Include(s => s.Cinema)
-                .Include(s => s.Movie)
-                .Include(s => s.Salon)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var session = await _repository.GetSessionDetails(id);
             if (session == null)
             {
                 return NotFound();
@@ -57,11 +53,11 @@ namespace BerrasBio.Controllers
         }
 
         // GET: Sessions/Create
-        public IActionResult Create()
+        public IActionResult Create(int id)
         {
-            ViewData["CinemaId"] = new SelectList(_context.Cinemas, "Id", "Id");
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Id");
-            ViewData["SalonId"] = new SelectList(_context.Salons, "Id", "Id");
+            ViewData["CinemaId"] = new SelectList(_context.Cinemas, "Id", "Name"); //gör en egen dropdown meny istället
+            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Name");
+            ViewData["SalonId"] = new SelectList(_context.Salons, "Id", "SalonName");
             return View();
         }
 
@@ -70,7 +66,7 @@ namespace BerrasBio.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,StartDate,AvailableSeats,MovieId,CinemaId,SalonId")] Session session)
+        public async Task<IActionResult> Create([Bind("StartDate,AvailableSeats,MovieId,CinemaId,SalonId")] Session session)
         {
             if (ModelState.IsValid)
             {
@@ -78,9 +74,9 @@ namespace BerrasBio.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CinemaId"] = new SelectList(_context.Cinemas, "Id", "Id", session.CinemaId);
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Id", session.MovieId);
-            ViewData["SalonId"] = new SelectList(_context.Salons, "Id", "Id", session.SalonId);
+            ViewData["CinemaId"] = new SelectList(_context.Cinemas, "Name", "Name", session.CinemaId);
+            ViewData["MovieId"] = new SelectList(_context.Movies, "Name", "Name", session.MovieId);
+            ViewData["SalonId"] = new SelectList(_context.Salons, "SalonName", "SalonName", session.SalonId);
             return View(session);
         }
 
