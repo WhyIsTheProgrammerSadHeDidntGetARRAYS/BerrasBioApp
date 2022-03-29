@@ -1,0 +1,11 @@
+﻿@model IEnumerable<Booking>
+
+<div class="row">
+    <div class="col-md-6 offset-3 alert alert-danger text-center">
+        <h2>Booking was unsuccessfull</h2>
+        <p>*There might not be enough seats to book a ticket.*</p>
+        <hr />
+        <p>Go to the Session category, by clicking the button, and see the seats and movies that are availabe.</p>
+        <a asp-controller="Sessions" asp-action="Index" class="btn btn-outline-primary">All Sessions today</a>
+    </div>
+</div>

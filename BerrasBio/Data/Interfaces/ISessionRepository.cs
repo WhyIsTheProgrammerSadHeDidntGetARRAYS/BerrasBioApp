@@ -1,4 +1,5 @@
-﻿using BerrasBio.Models;
+﻿using BerrasBio.Data.ViewModels;
+using BerrasBio.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,13 +10,16 @@ namespace BerrasBio.Data.Interfaces
 {
     public interface ISessionRepository
     {
-        Task<IEnumerable<Session>> GetAllSessionsAsync();
-        Task<Session> GetMovieSessionById(int id);
+        Task AddNewSession(Session newSession);
+        Task<NewSessionDropdownVM> GetNewSessionDropdown();
+        Task<IEnumerable<Session>> GetAllSessionsAsync(); //använder ej ta bort?
         Task UpdateSeatsOnBookedSession(int id, int amountOfTickets);
         Task UpdateSeatsOnRemovedBookingSession(int id, int amountOfTickets);
         Task<IEnumerable<Session>> GetBookableSessionsToday();
 
         Task<IEnumerable<Session>> GetSessionsTodayAsync(int id);
-        Task<Session> GetSessionDetails(int? id);
+        Task<Session> GetSessionById(int? id);
+        Task Delete(Session session);
+        Task Update(Session session);
     }
 }

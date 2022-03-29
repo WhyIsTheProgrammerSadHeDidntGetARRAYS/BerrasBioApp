@@ -42,11 +42,10 @@
         </div>
         <br />
         <div>
-            <a class="btn btn-success" asp-controller="Bookings" asp-action="Create" asp-route-id="@Model.Id">
+            <a class="btn btn-outline-success" asp-controller="Bookings" asp-action="Create" asp-route-id="@Model.Id">
                 Book Your Ticket
             </a> |
-            <a class="btn btn-secondary" asp-controller="Movies" asp-action="Index">Back to Movie list</a> |
-            <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
+            <a class="btn btn-outline-dark" asp-controller="Movies" asp-action="Index">Back to Movie list</a>
         </div>
     </div>
 </div>

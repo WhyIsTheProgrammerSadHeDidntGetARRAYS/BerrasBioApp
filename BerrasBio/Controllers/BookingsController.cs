@@ -31,18 +31,24 @@ namespace BerrasBio.Controllers
         public async Task<IActionResult> Create(int id)
         {
             var bookingData = await _bookingRepository.GetNewBookingDropdownVM();
-            ViewBag.Sessions = new SelectList(bookingData.Sessions
-                .Where(x => x.StartDate >= DateTime.Now && x.MovieId == id), "Id", "StartDate");
-            
+            ViewBag.Sessions = new SelectList(
+                bookingData.Sessions
+                .Where(x => x.StartDate >= DateTime.Now && x.MovieId == id && x.AvailableSeats > 0), "Id", "StartDate");
+
             ViewBag.Movies = new SelectList(bookingData.Movies.Where(x => x.Id == id), "Id", "Name");
             return View();
         }
         [HttpPost]
         public async Task<IActionResult> Create(NewBookingViewModel booking)
         {
-            if (!ModelState.IsValid || booking.AmountOfTickets < 1)
+            var sessionData = await _sessionRepository.GetSessionById(booking.SessionId);
+            if (!ModelState.IsValid)
             {
                 return View(booking);
+            }
+            if (sessionData.AvailableSeats < booking.AmountOfTickets)
+            {
+                return View("BookingFail");
             }
             await _bookingRepository.AddNewBooking(booking);
             await _sessionRepository.UpdateSeatsOnBookedSession(booking.SessionId, booking.AmountOfTickets);

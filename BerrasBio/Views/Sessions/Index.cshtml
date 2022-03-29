@@ -1,19 +1,22 @@
 ﻿@model IEnumerable<BerrasBio.Models.Session>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Sessions";
 }
 
-<h1>Index</h1>
+<h1>Sessions</h1>
 
 <p>
     <a class="btn btn-outline-primary" asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table id="myTable" class="table">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.StartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Salon.TotalSeats)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.AvailableSeats)
@@ -37,6 +40,9 @@
                 @Html.DisplayFor(modelItem => item.StartDate)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Salon.TotalSeats)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.AvailableSeats)
             </td>
             <td>
@@ -50,7 +56,7 @@
             </td>
             <td>
                 <a class="btn btn-outline-warning btn-sm" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a class="btn btn-outline-secondary btn-sm" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a class="btn btn-outline-secondary btn-sm" asp-controller="Movies" asp-action="Details" asp-route-id="@item.MovieId">Details</a> |
                 <a class="btn btn-outline-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>

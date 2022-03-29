@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/BerrasBio.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.11.5/b-2.2.2/fc-4.0.2/sc-2.0.5/sb-1.3.2/sp-2.0.0/sl-1.3.4/datatables.min.css"/>
+
 </head>
 <body>
     <header>
@@ -28,7 +30,7 @@
                             <a class="dropdown-item" asp-area="" asp-controller="Cinemas" asp-action="Index">Cinemas</a>
                             <a class="dropdown-item" asp-area="" asp-controller="Actors" asp-action="Index">Actors</a>
                             <a class="dropdown-item" asp-area="" asp-controller="Bookings" asp-action="Index">All bookings</a>
-                            <a class="dropdown-item" asp-area="" asp-controller="Sessions" asp-action="Index">All Bookable Sessions</a>
+                            <a class="dropdown-item" asp-area="" asp-controller="Sessions" asp-action="Index">Sessions</a>
                             </div>
                         </li>
                     </ul>
@@ -43,14 +45,15 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+   @* <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2022 - BerrasBio - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-    </footer>
+    </footer>*@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.11.5/b-2.2.2/fc-4.0.2/sc-2.0.5/sb-1.3.2/sp-2.0.0/sl-1.3.4/datatables.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

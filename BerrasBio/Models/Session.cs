@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace BerrasBio.Models
 {
     //Visning för en specifik film
-    public class Session : IEntityBase
+    public class Session 
     {   
         [Key]
         public int Id { get; set; }

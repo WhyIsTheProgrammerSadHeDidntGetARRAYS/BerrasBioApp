@@ -10,31 +10,29 @@ using BerrasBio.Data;
 using BerrasBio.Models;
 using BerrasBio.Data.Services;
 using BerrasBio.Data.Interfaces;
+using BerrasBio.Data.ViewModels;
 
 namespace BerrasBio.Controllers
 {
     public class SessionsController : Controller
     {
         private readonly AppDbContext _context;
-        private readonly ISessionRepository _repository;
+        private readonly ISessionRepository _sessionRepository;
+        private readonly ISalonRepository _salonRepository;
 
-        public SessionsController(AppDbContext context, ISessionRepository service)
+        public SessionsController(AppDbContext context, ISessionRepository service, ISalonRepository salonRepository)
         {
             _context = context;
-            _repository = service;
+            _sessionRepository = service;
+            _salonRepository = salonRepository;
         }
 
         // GET: Sessions
         public async Task<IActionResult> Index()
         {
-            var sessions = await _repository.GetBookableSessionsToday();
+            var sessions = await _sessionRepository.GetBookableSessionsToday(); //meaning the time has not passed the current time right now
             return View(sessions);
         }
-
-        //public async Task<IActionResult> GetMovieSession(int id)
-        //{
-
-        //}
 
         // GET: Sessions/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -43,7 +41,7 @@ namespace BerrasBio.Controllers
             {
                 return NotFound();
             }
-            var session = await _repository.GetSessionDetails(id);
+            var session = await _sessionRepository.GetSessionById(id);
             if (session == null)
             {
                 return NotFound();
@@ -51,36 +49,40 @@ namespace BerrasBio.Controllers
 
             return View(session);
         }
-
-        // GET: Sessions/Create
-        public IActionResult Create(int id)
+        public async Task<IActionResult> Create(int id)
         {
-            ViewData["CinemaId"] = new SelectList(_context.Cinemas, "Id", "Name"); //gör en egen dropdown meny istället
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Name");
-            ViewData["SalonId"] = new SelectList(_context.Salons, "Id", "SalonName");
+            var sessionData = await _sessionRepository.GetNewSessionDropdown();
+            ViewData["CinemaId"] = new SelectList(sessionData.Cinemas, "Id", "Name");
+            ViewData["MovieId"] = new SelectList(sessionData.Movies, "Id", "Name");
+            ViewData["SalonId"] = new SelectList(sessionData.Salons, "Id", "SalonName");
             return View();
         }
 
-        // POST: Sessions/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //POST: Sessions/Create
+        //To protect from overposting attacks, enable the specific properties you want to bind to.
+        //For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StartDate,AvailableSeats,MovieId,CinemaId,SalonId")] Session session)
+        public async Task<IActionResult> Create([Bind("StartDate,MovieId,CinemaId,SalonId")] Session session)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(session);
-                await _context.SaveChangesAsync();
+                // TODO: Vill gärna tro att den här biten kanske kunde varit ett jobb för en service(när man blandar in fler entiter egentligen, för det blir ju lite att man manipulerar datan i objekt form aka business logic) , men fuck it
+                var test = await _salonRepository.GetSalonById(session.SalonId);
+                session.AvailableSeats = test.TotalSeats;
+                await _sessionRepository.AddNewSession(session);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CinemaId"] = new SelectList(_context.Cinemas, "Name", "Name", session.CinemaId);
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Name", "Name", session.MovieId);
-            ViewData["SalonId"] = new SelectList(_context.Salons, "SalonName", "SalonName", session.SalonId);
+            var sessionData = await _sessionRepository.GetNewSessionDropdown();
+            ViewData["CinemaId"] = new SelectList(sessionData.Cinemas, "Id", "Name");
+            ViewData["MovieId"] = new SelectList(sessionData.Movies, "Id", "Name");
+            ViewData["SalonId"] = new SelectList(sessionData.Salons, "Id", "SalonName");
             return View(session);
         }
 
         // GET: Sessions/Edit/5
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -88,17 +90,18 @@ namespace BerrasBio.Controllers
                 return NotFound();
             }
 
-            var session = await _context.Sessions.FindAsync(id);
+            var session = await _sessionRepository.GetSessionById(id);
             if (session == null)
             {
                 return NotFound();
             }
-            ViewData["CinemaId"] = new SelectList(_context.Cinemas, "Id", "Id", session.CinemaId);
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Id", session.MovieId);
-            ViewData["SalonId"] = new SelectList(_context.Salons, "Id", "Id", session.SalonId);
+            var sessionData = await _sessionRepository.GetNewSessionDropdown();
+            ViewData["CinemaId"] = new SelectList(sessionData.Cinemas, "Id", "Name");
+            ViewData["MovieId"] = new SelectList(sessionData.Movies, "Id", "Name");
+            ViewData["SalonId"] = new SelectList(sessionData.Salons, "Id", "SalonName");
             return View(session);
         }
-
+        //TODO: Fixa så att denna metoden använder sig av repository(skulle varit services egentligen men w/e)
         // POST: Sessions/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -110,31 +113,32 @@ namespace BerrasBio.Controllers
             {
                 return NotFound();
             }
-
-            if (ModelState.IsValid)
+            var salon = await _salonRepository.GetSalonById(session.SalonId);
+            
+            if (!ModelState.IsValid || session.AvailableSeats > salon.TotalSeats || session.AvailableSeats < 1)
             {
-                try
-                {
-                    _context.Update(session);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!SessionExists(session.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                var sessionData = await _sessionRepository.GetNewSessionDropdown();
+                ViewData["CinemaId"] = new SelectList(sessionData.Cinemas, "Id", "Name");
+                ViewData["MovieId"] = new SelectList(sessionData.Movies, "Id", "Name");
+                ViewData["SalonId"] = new SelectList(sessionData.Salons, "Id", "SalonName");
+                return View(session);
             }
-            ViewData["CinemaId"] = new SelectList(_context.Cinemas, "Id", "Id", session.CinemaId);
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Id", session.MovieId);
-            ViewData["SalonId"] = new SelectList(_context.Salons, "Id", "Id", session.SalonId);
-            return View(session);
+            try
+            {
+                await _sessionRepository.Update(session);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!SessionExists(session.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Sessions/Delete/5
@@ -144,12 +148,8 @@ namespace BerrasBio.Controllers
             {
                 return NotFound();
             }
+            var session = await _sessionRepository.GetSessionById(id);
 
-            var session = await _context.Sessions
-                .Include(s => s.Cinema)
-                .Include(s => s.Movie)
-                .Include(s => s.Salon)
-                .FirstOrDefaultAsync(m => m.Id == id);
             if (session == null)
             {
                 return NotFound();
@@ -163,9 +163,8 @@ namespace BerrasBio.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var session = await _context.Sessions.FindAsync(id);
-            _context.Sessions.Remove(session);
-            await _context.SaveChangesAsync();
+            var session2 = await _sessionRepository.GetSessionById(id);
+            await _sessionRepository.Delete(session2);
             return RedirectToAction(nameof(Index));
         }
 

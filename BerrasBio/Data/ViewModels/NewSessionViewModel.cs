@@ -11,10 +11,9 @@ namespace BerrasBio.Data.ViewModels
     {
         public int Id { get; set; }
         public DateTime StartDate { get; set; }
-        public int AvailableSeats { get; set; }
-        public Cinema Cinema { get; set; }
-        public Movie Movie { get; set; }
-        public Salon Salon { get; set; }
+        public int CinemaId { get; set; }
+        public int MovieId { get; set; }
+        public int SalonId { get; set; }
        
     }
 }

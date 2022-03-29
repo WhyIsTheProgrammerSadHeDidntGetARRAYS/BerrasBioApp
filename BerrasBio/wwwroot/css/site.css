@@ -35,6 +35,12 @@ body {
     transition: .2s;
     box-shadow: 5px 5px 5px #c1bebe;
 }
+.card-img-top {
+    /*width: 250px;*/
+    height: 320px;
+    object-fit: cover;
+    padding: inherit;
+}
 
 .moviepic:hover {
     transform: scale(1.2);
@@ -50,3 +56,4 @@ a, a:hover, a:focus, a:active {
     text-decoration: none;
     color: inherit;
 }
+

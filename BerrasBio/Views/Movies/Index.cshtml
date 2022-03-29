@@ -5,16 +5,26 @@
 }
 <link rel="stylesheet" href="~/BerrasBio.styles.css" asp-append-version="true" />
 
-<h1>Currently Showing</h1>
 
-<p>
-    <a class="btn btn-outline-success" asp-action="Create">Add new Movie</a>
-    <br />
-</p>
-@foreach (var item in Model)
-{
-    <a asp-action="Details" asp-route-id="@item.Id">
-        <img class="moviepic" src="@item.ImageLink" alt="@item.Name">
-    </a>
-}
+<div class="container-fluid padding">
+    <h3>Our Movies</h3>
+    <div class="row padding">
 
+        @foreach (var item in Model)
+        {
+            <div class="col-md-2">
+                <div class="card">
+                    <img class="card-img-top" width="100%" src="@item.ImageLink" alt="@item.Name">
+                    <div class="card-body">
+                        @*<h4 class="card-title">@item.Name</h4>*@
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-dark">Details</a>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>
+@*<a asp-action="Details" asp-route-id="@item.Id">
+    <img class="moviepic card-img-top" src="@item.ImageLink" alt="@item.Name">
+    </a>*@

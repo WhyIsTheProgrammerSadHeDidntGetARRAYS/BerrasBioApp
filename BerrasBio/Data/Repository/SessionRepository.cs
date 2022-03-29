@@ -1,4 +1,5 @@
 ﻿using BerrasBio.Data.Interfaces;
+using BerrasBio.Data.ViewModels;
 using BerrasBio.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -12,10 +13,15 @@ namespace BerrasBio.Data.Repository
     public class SessionRepository : ISessionRepository
     {
         private readonly AppDbContext _context;
-        
-        public SessionRepository(AppDbContext context) 
-        { 
-            _context = context; 
+
+        public SessionRepository(AppDbContext context)
+        {
+            _context = context;
+        }
+        public async Task AddNewSession(Session newSession)
+        {
+            await _context.Sessions.AddAsync(newSession);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Session>> GetAllSessionsAsync()
@@ -28,11 +34,11 @@ namespace BerrasBio.Data.Repository
             return sessions; //this method could be removed since we only want to show todays active sessions (see GetSessionsToday)
         }
 
-        public Task<Session> GetMovieSessionById(int id)
-        {
-            var specificSession = _context.Sessions.FirstOrDefaultAsync(s => s.Id == id);
-            return specificSession;
-        }
+        //public async Task<Session> GetMovieSessionById(int id)
+        //{
+        //    var specificSession = await _context.Sessions.FirstOrDefaultAsync(s => s.Id == id);
+        //    return specificSession;
+        //}
         public async Task<IEnumerable<Session>> GetBookableSessionsToday()
         {
             var sessionsToday = await _context.Sessions
@@ -76,7 +82,7 @@ namespace BerrasBio.Data.Repository
             }
         }
 
-        public async Task<Session> GetSessionDetails(int? id)
+        public async Task<Session> GetSessionById(int? id)
         {
             var session = await _context.Sessions
                 .Include(s => s.Cinema)
@@ -84,6 +90,28 @@ namespace BerrasBio.Data.Repository
                 .Include(s => s.Salon)
                 .FirstOrDefaultAsync(m => m.Id == id);
             return session;
+        }
+        public async Task<NewSessionDropdownVM> GetNewSessionDropdown()
+        {
+            var dropDown = new NewSessionDropdownVM()
+            {
+                Cinemas = await _context.Cinemas.OrderBy(x => x.Id).ToListAsync(),
+                Movies = await _context.Movies.OrderBy(x => x.Id).ToListAsync(),
+                Salons = await _context.Salons.OrderBy(x => x.Id).ToListAsync()
+            };
+            return dropDown;
+        }
+
+        public async Task Delete(Session session)
+        {
+            _context.Sessions.Remove(session);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task Update(Session session)
+        {
+            _context.Sessions.Update(session);
+            await _context.SaveChangesAsync();
         }
     }
 }
