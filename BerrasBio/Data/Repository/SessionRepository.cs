@@ -24,21 +24,6 @@ namespace BerrasBio.Data.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Session>> GetAllSessionsAsync()
-        {
-            var sessions = await _context.Sessions
-                .Include(c => c.Cinema)
-                .Include(m => m.Movie)
-                .Include(s => s.Salon)
-                .ToListAsync();
-            return sessions; //this method could be removed since we only want to show todays active sessions (see GetSessionsToday)
-        }
-
-        //public async Task<Session> GetMovieSessionById(int id)
-        //{
-        //    var specificSession = await _context.Sessions.FirstOrDefaultAsync(s => s.Id == id);
-        //    return specificSession;
-        //}
         public async Task<IEnumerable<Session>> GetBookableSessionsToday()
         {
             var sessionsToday = await _context.Sessions
@@ -50,31 +35,21 @@ namespace BerrasBio.Data.Repository
 
             return sessionsToday;
         }
-        public async Task<IEnumerable<Session>> GetSessionsTodayAsync(int id)
-        {
-            var todaysDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day);
-            var sessionsToday = await _context.Sessions
-                .Include(c => c.Cinema)
-                .Include(m => m.Movie)
-                .Include(s => s.Salon)
-                .Where(x => x.StartDate >= todaysDate && x.MovieId == id)
-                .ToListAsync();
+        
 
-            return sessionsToday;
-        }
-
-        public async Task UpdateSeatsOnBookedSession(int id, int amountOfTickets)
+        public async Task UpdateSessionseatsOnNewBooking(int id, int amountOfTickets)
         {
-            var activeSession = await _context.Sessions.FirstOrDefaultAsync(x => x.Id == id);
-            if (activeSession != null)
+            //var activeSession = await _context.Sessions.FirstOrDefaultAsync(x => x.Id == id);
+            var test = await GetSessionById(id);
+            if (test != null)
             {
-                activeSession.AvailableSeats -= amountOfTickets;
+                test.AvailableSeats -= amountOfTickets;
                 await _context.SaveChangesAsync();
             }
         }
-        public async Task UpdateSeatsOnRemovedBookingSession(int id, int amountOfTickets)
+        public async Task UpdateSessionseatsOnRemovedBooking(int id, int amountOfTickets)
         {
-            var activeSession = await _context.Sessions.FirstOrDefaultAsync(x => x.Id == id);
+            var activeSession = await GetSessionById(id);
             if (activeSession != null)
             {
                 activeSession.AvailableSeats += amountOfTickets;
@@ -110,8 +85,32 @@ namespace BerrasBio.Data.Repository
 
         public async Task Update(Session session)
         {
-            _context.Sessions.Update(session);
+            var entry = _context.Entry(session);
+            entry.State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
+        
+        //public async Task<IEnumerable<Session>> GetAllSessionsAsync()
+        //{
+        //    var sessions = await _context.Sessions
+        //        .Include(c => c.Cinema)
+        //        .Include(m => m.Movie)
+        //        .Include(s => s.Salon)
+        //        .ToListAsync();
+        //    return sessions; //this method could be removed since we only want to show todays active sessions (see GetSessionsToday)
+        //}
+        
+        //public async Task<IEnumerable<Session>> GetSessionsTodayAsync(int id)
+        //{
+        //    var todaysDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day);
+        //    var sessionsToday = await _context.Sessions
+        //        .Include(c => c.Cinema)
+        //        .Include(m => m.Movie)
+        //        .Include(s => s.Salon)
+        //        .Where(x => x.StartDate >= todaysDate && x.MovieId == id)
+        //        .ToListAsync();
+
+        //    return sessionsToday;
+        //}
     }
 }

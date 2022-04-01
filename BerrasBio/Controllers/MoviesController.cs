@@ -29,7 +29,7 @@ namespace BerrasBio.Controllers
         /// <returns>View of input forms</returns>
         public async Task<IActionResult> Create()
         {
-            var movieData = await _repository.GetNewMovieDropdownVM(); //should maybe be in a service folder
+            var movieData = await _repository.GetNewMovieDropdownVM(); 
             ViewBag.Cinemas = new SelectList(movieData.Cinemas, "Id", "Name");
             ViewBag.Actors = new SelectList(movieData.Actors, "Id", "Name");
             return View();

@@ -17,13 +17,14 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
-// Adding "controller" services
+// Adding repositories/services
 builder.Services.AddScoped<IActorService, ActorService>();
 builder.Services.AddScoped<IBookingRepository, BookingRepository>();
 builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 builder.Services.AddScoped<ISessionRepository, SessionRepository>();
 builder.Services.AddScoped<ICinemaRepository, CinemaRepository>();
 builder.Services.AddScoped<ISalonRepository, SalonRepository>();
+
 
 //builder.Services.AddScoped(typeof(IGenericRepository<Movie>), typeof(GenericRepository<Movie>));
 

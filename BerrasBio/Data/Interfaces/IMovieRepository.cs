@@ -14,5 +14,6 @@ namespace BerrasBio.Data.Repository
         Task<NewMovieDropdownVM> GetNewMovieDropdownVM();
         Task<IEnumerable<Movie>> GetAllMovies();
         Task<Movie> GetMovieById(int id);
+        Task UpdateMovie(Movie movie);
     }
 }

@@ -51,7 +51,7 @@ namespace BerrasBio.Controllers
                 return View("BookingFail");
             }
             await _bookingRepository.AddNewBooking(booking);
-            await _sessionRepository.UpdateSeatsOnBookedSession(booking.SessionId, booking.AmountOfTickets);
+            await _sessionRepository.UpdateSessionseatsOnNewBooking(booking.SessionId, booking.AmountOfTickets);
             return View("BookingComplete");
         }
         public async Task<IActionResult> Delete(int id)
@@ -61,7 +61,7 @@ namespace BerrasBio.Controllers
             if (deleteBooking == null) { return View(id); }
 
             await _bookingRepository.DeleteBooking(id);
-            await _sessionRepository.UpdateSeatsOnRemovedBookingSession(deleteBooking.SessionId, deleteBooking.AmountOfTickets);
+            await _sessionRepository.UpdateSessionseatsOnRemovedBooking(deleteBooking.SessionId, deleteBooking.AmountOfTickets);
             return RedirectToAction(nameof(Index));
 
         }

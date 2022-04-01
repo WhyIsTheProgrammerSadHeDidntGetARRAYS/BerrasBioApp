@@ -12,14 +12,14 @@ namespace BerrasBio.Data.Interfaces
     {
         Task AddNewSession(Session newSession);
         Task<NewSessionDropdownVM> GetNewSessionDropdown();
-        Task<IEnumerable<Session>> GetAllSessionsAsync(); //använder ej ta bort?
-        Task UpdateSeatsOnBookedSession(int id, int amountOfTickets);
-        Task UpdateSeatsOnRemovedBookingSession(int id, int amountOfTickets);
+        Task UpdateSessionseatsOnNewBooking(int id, int amountOfTickets);
+        Task UpdateSessionseatsOnRemovedBooking(int id, int amountOfTickets);
         Task<IEnumerable<Session>> GetBookableSessionsToday();
-
-        Task<IEnumerable<Session>> GetSessionsTodayAsync(int id);
         Task<Session> GetSessionById(int? id);
         Task Delete(Session session);
         Task Update(Session session);
+        
+        //Task<IEnumerable<Session>> GetAllSessionsAsync(); //använder ej ta bort?
+        //Task<IEnumerable<Session>> GetSessionsTodayAsync(int id);
     }
 }

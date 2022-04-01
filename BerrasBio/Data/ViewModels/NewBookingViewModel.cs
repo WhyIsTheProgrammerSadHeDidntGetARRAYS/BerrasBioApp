@@ -16,7 +16,7 @@ namespace BerrasBio.Data.ViewModels
         public int AmountOfTickets { get; set; }
 
         [Display(Name ="Active Sessions")]
-        [Required(ErrorMessage = "Session is required to book a ticket. If you don't see any sessions for this movie, Check 'All bookable sessions'")]
+        [Required(ErrorMessage = "Session is required to book a ticket. If you don't see any sessions for this movie, navigate to the Session tab, and see what movies we're currently showing'")]
         public int SessionId { get; set; }// we are gonna display time of the SessionId in question
         [Display(Name ="Your movie of choice.")]
         public int MovieId { get; set; } // we are gonna display the movie name that was clicked on from the "book a ticket" button

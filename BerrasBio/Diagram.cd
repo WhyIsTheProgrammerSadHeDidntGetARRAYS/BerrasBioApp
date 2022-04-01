@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="BerrasBio.Models.Actor" Collapsed="true">
+    <Position X="4.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAACAAAAAQAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Models\Actor.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BerrasBio.Models.Booking">
+    <Position X="12" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAEQAAAAAAACAIAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Booking.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Session" />
+      <Property Name="Movie" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BerrasBio.Models.Cinema" Collapsed="true">
+    <Position X="6.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAgEAAAAAAAAAQAIAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Cinema.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BerrasBio.Models.Salon">
+    <Position X="6.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAACAAAAAAEAAAAIACAAAAAAAAAAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>Models\Salon.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Cinema" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="BerrasBio.Models.Session">
+    <Position X="9.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAACAAAAAAEAEAAAAgAAAAAAIQAAAAAAAAACAEAAAAA=</HashCode>
+      <FileName>Models\Session.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Movie" />
+      <Property Name="Cinema" />
+      <Property Name="Salon" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="BerrasBio.Models.Movie" Collapsed="true">
+    <Position X="9.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAACAAAAAQEgAQAAAAIAAAQAAAAAAAAAAAACCAAAAAA=</HashCode>
+      <FileName>Models\Movie.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Orientation="Left" Position="0.362" />
+  </Class>
+  <Class Name="BerrasBio.Models.Movie_Actor" Collapsed="true">
+    <Position X="6.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAkAAAAAAAAAAAAQAAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Movie_Actor.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Movie" />
+      <Property Name="Actor" />
+    </ShowAsAssociation>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

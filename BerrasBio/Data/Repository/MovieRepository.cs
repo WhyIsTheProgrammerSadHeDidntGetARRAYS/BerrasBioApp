@@ -58,5 +58,11 @@ namespace BerrasBio.Data.Repository
             };
             return dropdown;
         }
+        public async Task UpdateMovie(Movie movie)
+        {
+            var entry = _context.Entry(movie);
+            entry.State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
     }
 }

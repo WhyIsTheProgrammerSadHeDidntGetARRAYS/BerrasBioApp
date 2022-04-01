@@ -56,4 +56,10 @@ a, a:hover, a:focus, a:active {
     text-decoration: none;
     color: inherit;
 }
+.navbar {
+    font-size: 20px !important;
+}
+ul.nav a:hover {
+    color: #fff !important;
+}
 

@@ -16,13 +16,11 @@ namespace BerrasBio.Controllers
 {
     public class SessionsController : Controller
     {
-        private readonly AppDbContext _context;
         private readonly ISessionRepository _sessionRepository;
         private readonly ISalonRepository _salonRepository;
 
-        public SessionsController(AppDbContext context, ISessionRepository service, ISalonRepository salonRepository)
+        public SessionsController(ISessionRepository service, ISalonRepository salonRepository)
         {
-            _context = context;
             _sessionRepository = service;
             _salonRepository = salonRepository;
         }
@@ -114,7 +112,7 @@ namespace BerrasBio.Controllers
                 return NotFound();
             }
             var salon = await _salonRepository.GetSalonById(session.SalonId);
-            
+
             if (!ModelState.IsValid || session.AvailableSeats > salon.TotalSeats || session.AvailableSeats < 1)
             {
                 var sessionData = await _sessionRepository.GetNewSessionDropdown();
@@ -129,14 +127,7 @@ namespace BerrasBio.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!SessionExists(session.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
             return RedirectToAction(nameof(Index));
         }
@@ -168,9 +159,5 @@ namespace BerrasBio.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool SessionExists(int id)
-        {
-            return _context.Sessions.Any(e => e.Id == id);
-        }
     }
 }

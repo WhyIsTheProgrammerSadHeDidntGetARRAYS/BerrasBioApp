@@ -95,7 +95,7 @@ namespace BerrasBio.Data
                         {
                             Name = "James Bond",
                             Description = "James Bond has left active service. His peace is short-lived when Felix Leiter, an old friend from the CIA, turns up asking for help, leading Bond onto the trail of a mysterious villain armed with dangerous new technology.",
-                            Price = 150,
+                            Price = 175,
                             ImageLink = "/Content/Images/Post-6.jpg",
                             CinemaId = 1,
                             Genre = MovieCategory.Action
@@ -104,7 +104,7 @@ namespace BerrasBio.Data
                         {
                             Name = "Venom",
                             Description = "Eddie Brock attempts to reignite his career by interviewing serial killer Cletus Kasady, who becomes the host of the symbiote Carnage and escapes prison after a failed execution.",
-                            Price = 150,
+                            Price = 145,
                             ImageLink = "/Content/Images/Post-1.jpg",
                             CinemaId = 1,
                             Genre = MovieCategory.Action
@@ -113,7 +113,7 @@ namespace BerrasBio.Data
                         {
                             Name = "Jungle Cruise",
                             Description = "Based on Disneyland's theme park ride where a small riverboat takes a group of travelers through a jungle filled with dangerous animals and reptiles but with a supernatural element.",
-                            Price = 150,
+                            Price = 130,
                             ImageLink = "/Content/Images/Post-3.jpg",
                             CinemaId = 1,
                             Genre = MovieCategory.Comedy
@@ -122,7 +122,7 @@ namespace BerrasBio.Data
                         {
                             Name = "The Tomorrow War",
                             Description = "A family man is drafted to fight in a future war where the fate of humanity relies on his ability to confront the past.",
-                            Price = 150,
+                            Price = 125,
                             ImageLink = "/Content/Images/Post-2.jpg",
                             CinemaId = 1,
                             Genre = MovieCategory.Action
