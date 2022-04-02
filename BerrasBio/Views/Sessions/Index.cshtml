@@ -61,7 +61,15 @@
                 @Html.DisplayFor(modelItem => item.Salon.SalonName)
             </td>
             <td>
-                <a class ="btn btn-outline-primary btn-sm" asp-controller="Bookings" asp-action="Create" asp-route-id="@item.Movie.Id">Book ticket(s)</a>
+                    @if(@item.AvailableSeats < 1)
+                    {
+                        <a class ="btn btn-outline-primary btn-sm disabled">Full</a>
+                    }
+                    else
+                    {
+                        <a class ="btn btn-outline-primary btn-sm" asp-controller="Bookings" asp-action="Create" asp-route-id="@item.Movie.Id">Book ticket(s)</a>
+                    }
+                
                 <a class="btn btn-outline-warning btn-sm" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a class="btn btn-outline-secondary btn-sm" asp-controller="Movies" asp-action="Details" asp-route-id="@item.MovieId">Details</a> |
                 <a class="btn btn-outline-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
