@@ -41,7 +41,7 @@ namespace BerrasBio.Data.Repository
 
         public async Task<Cinema> GetByIdAsync(int id)
         {
-            var actor = await _context.Cinemas.FirstOrDefaultAsync(x => x.Id == id);
+            var actor = await _context.Cinemas.Include(s => s.Salon).FirstOrDefaultAsync(x => x.Id == id);
             return actor!;
         }
 
